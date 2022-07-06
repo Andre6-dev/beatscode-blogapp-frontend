@@ -2,28 +2,25 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-
 import { PencilAltIcon } from "@heroicons/react/outline";
 import { fetchCategoriesAction } from "./categorySlice";
 
 const CategoryList = () => {
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(fetchCategoriesAction());
   }, [dispatch]);
-
   const category = useSelector((state) => state?.category);
 
-  const { categoryList, loading, appError, serverError } = category;
+  const { categoryList, loading, appErr, serverErr } = category;
 
   return (
     <>
       {loading ? (
         <h2 className="text-center text-3xl text-green-800">Loading</h2>
-      ) : appError || serverError ? (
+      ) : appErr || serverErr ? (
         <h2 className="text-center text-3xl text-red-600">
-          {appError} {serverError}
+          {serverErr} {serverErr}
         </h2>
       ) : categoryList?.length <= 0 ? (
         <h2 className="text-center text-3xl text-green-800">
@@ -33,22 +30,18 @@ const CategoryList = () => {
         <div className="mt-4 px-4 sm:px-6 lg:px-8">
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
-              <h1 className="text-xl font-semibold text-gray-900">
-                CATEGORIES
-              </h1>
+              <h1 className="text-xl font-semibold text-gray-900">Users</h1>
               <p className="mt-2 text-sm text-gray-700">
-                Category list by users, including thee name, title, created at
-                and edit.
+                A list of all the users in your account including their name,
+                title, email and role.
               </p>
             </div>
             <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
               <button
                 type="button"
-                className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 
-                  px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 
-                  focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
               >
-                Edit Category
+                Add user
               </button>
             </div>
           </div>
