@@ -11,6 +11,7 @@ import {
 import { PlusIcon, LogoutIcon } from "@heroicons/react/solid";
 import { useDispatch } from "react-redux";
 import { logoutAction } from "../../../redux/slices/users/usersSlices";
+import mainLogo from "../../../img/Logo1.png";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
@@ -52,7 +53,11 @@ const PrivateNavbar = ({ isLogin }) => {
                 </div>
                 <div className="flex-shrink-0 flex items-center">
                   {/* Logo */}
-                  <BookOpenIcon className="h-10 w-10 text-yellow-200" />
+                  <img
+                    className="hidden lg:block h-8 w-auto"
+                    src={mainLogo}
+                    alt="Workflow"
+                  />
                 </div>
                 <div className="hidden md:ml-6 md:flex md:items-center md:space-x-4">
                   {navigation.map((item) => (
