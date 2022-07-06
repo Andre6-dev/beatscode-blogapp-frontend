@@ -302,6 +302,7 @@ const Register = () => {
                     {/* CHECK FOR LOADING STATE*/}
                     {loading ? (
                       <button
+                        disabled
                         type="submit"
                         className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm
                       text-sm font-medium text-white bg-purple-600 hover:bg-rose-300 focus:outline-none focus:ring-2
