@@ -56,7 +56,7 @@ const features = [
 
 const HomePage = () => {
   return (
-    <div className="h-screen bg-gradient-to-tl from-darkPurple via-darkPurple to-darkPink overflow-hidden">
+    <div className="bg-gradient-to-tl from-darkPurple via-darkPurple to-darkPink overflow-hidden">
       {/*MAIN PAGE*/}
       <main>
         <div className="h-screen pt-10 sm:pt-16 lg:pt-8 lg:pb-14 lg:overflow-hidden">
