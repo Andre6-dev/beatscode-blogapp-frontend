@@ -1,7 +1,8 @@
 import React from "react";
 import { useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import { PlusCircleIcon, MinusCircleIcon } from "@heroicons/react/solid";
-import robotCreate from "../../img/robotCreate.png";
+import robotCreate from "../../img/robotUpdate.png";
 import {
   fetchCategoryAction,
   updateCategoriesAction,
@@ -28,8 +29,9 @@ const UpdateCategory = ({
   }, []);
 
   // GET DATA FROM STORE
-  const store = useSelector((state) => state?.category);
-  const { loading, serverError, appError, category } = store;
+  const state = useSelector((state) => state?.category);
+  const { loading, serverError, appError, category, isEdited, isDeleted } =
+    state;
 
   // FORMIK
   const formik = useFormik({
@@ -44,6 +46,9 @@ const UpdateCategory = ({
     },
     validationSchema: formSchema,
   });
+
+  // Redirect when category is edited or deleted
+  if (isEdited || isDeleted) return <Redirect to="/category-list" />;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-darkPurple py-12 px-4 sm:px-6 lg:px-8">

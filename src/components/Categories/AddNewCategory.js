@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import { PlusCircleIcon, BookOpenIcon } from "@heroicons/react/solid";
 import robotCreate from "../../img/robotCreate.png";
 import { createCategoryAction } from "../../redux/slices/category/categorySlice";
@@ -30,7 +31,9 @@ const AddNewCategory = () => {
   // GET DATA FROM STORE
   const store = useSelector((state) => state?.category);
 
-  const { userAuth, loading, serverError, appError } = store;
+  const { loading, serverError, appError, category, isCreated } = store;
+  // Redirect
+  if (isCreated) return <Redirect to="/category-list" />;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-darkPurple py-12 px-4 sm:px-6 lg:px-8">
