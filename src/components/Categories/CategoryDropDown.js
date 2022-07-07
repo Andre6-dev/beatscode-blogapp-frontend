@@ -9,18 +9,17 @@ const options = [
   { value: "vanilla", label: "Vanilla" },
 ];
 
-const CategoryDropDown = (props) => {
-  console.log(props);
+const CategoryDropDown = props => {
   //dispatch action
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchCategoriesAction());
   }, [dispatch]);
   //select categories
-  const category = useSelector((state) => state?.category);
+  const category = useSelector(state => state?.category);
   const { categoryList, loading, appErr, serverErr } = category;
 
-  const allCategories = categoryList?.map((category) => {
+  const allCategories = categoryList?.map(category => {
     return {
       label: category?.title,
       value: category?._id,
@@ -28,7 +27,7 @@ const CategoryDropDown = (props) => {
   });
 
   //handleChange
-  const handleChange = (value) => {
+  const handleChange = value => {
     props.onChange("category", value);
   };
   //handleBlur

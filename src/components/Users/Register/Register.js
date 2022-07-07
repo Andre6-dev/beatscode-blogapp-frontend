@@ -3,27 +3,23 @@ import { useFormik } from "formik";
 import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
-
-import backgrounAuth from "../../../img/RobotVectorLogin.png";
-import mainLogo from "../../../img/Logo1.png";
 import { registerUserAction } from "../../../redux/slices/users/usersSlices";
 
-// FORM SCHEMA
+//Form schema
 const formSchema = Yup.object({
   firstName: Yup.string().required("First Name is required"),
   lastName: Yup.string().required("Last Name is required"),
   email: Yup.string().required("Email is required"),
   password: Yup.string().required("Password is required"),
 });
-
-//-----------------------------------------------------------
-// REGISTER COMPONENT
-//-----------------------------------------------------------
+//-------------------------------
+//Register
+//-------------------------------
 const Register = () => {
-  // DISPATCH
+  //dispath
   const dispatch = useDispatch();
 
-  // FORMIK
+  //formik
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -31,310 +27,269 @@ const Register = () => {
       email: "",
       password: "",
     },
-    onSubmit: (values) => {
-      // DISPATCH THE ACTION
+    onSubmit: values => {
+      //dispath the action
       dispatch(registerUserAction(values));
       console.log(values);
     },
     validationSchema: formSchema,
   });
 
-  // SELECT STATE FROM STORE
-  const storeData = useSelector((store) => store?.users);
-  const { loading, appError, serverError, registered } = storeData;
-  console.log(storeData);
+  //select state from store
+  const storeData = useSelector(store => store?.users);
+  const { loading, appErr, serverErr, registered } = storeData;
 
-  // REDIRECT AFTER REGISTER
+  //redirect
   if (registered) {
-    return <Redirect to="/profile" />;
+    return <Redirect to="/login" />;
   }
 
   return (
-    <>
-      <div className="h-screen min-h-full flex bg-blueLogin">
-        <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
-          <div className="mx-auto w-full max-w-sm lg:w-96">
-            <div>
-              <img className="h-12 w-auto" src={mainLogo} alt="Workflow" />
-              <h2 className="mt-6 text-3xl font-extrabold text-white">
-                Sign in to your account
-              </h2>
-              <p className="mt-2 text-sm text-gray-300">
-                Or{" "}
-                <a
-                  href="#"
-                  className="font-medium text-indigo-500 hover:text-indigo-300"
-                >
-                  start your 14-day free trial
-                </a>
-              </p>
-            </div>
-
-            <div className="mt-8">
-              <div>
-                <div>
-                  <p className="text-sm font-medium text-gray-300">
-                    Sign in with
-                  </p>
-
-                  <div className="mt-1 grid grid-cols-3 gap-3">
-                    <div>
-                      <a
-                        href="#"
-                        className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-blue-500 text-sm font-medium text-white hover:bg-blue-200"
-                      >
-                        <span className="sr-only">Sign in with Facebook</span>
-                        <svg
-                          className="w-5 h-5"
-                          aria-hidden="true"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </a>
-                    </div>
-
-                    <div>
-                      <a
-                        href="#"
-                        className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-blue-400 text-sm font-medium text-white hover:bg-blue-200"
-                      >
-                        <span className="sr-only">Sign in with Twitter</span>
-                        <svg
-                          className="w-5 h-5"
-                          aria-hidden="true"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
-                        </svg>
-                      </a>
-                    </div>
-
-                    <div>
-                      <a
-                        href="#"
-                        className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-slate-700 text-sm font-medium text-white hover:bg-slate-400"
-                      >
-                        <span className="sr-only">Sign in with GitHub</span>
-                        <svg
-                          className="w-5 h-5"
-                          aria-hidden="true"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-6 relative">
-                  <div
-                    className="absolute inset-0 flex items-center"
-                    aria-hidden="true"
-                  >
-                    <div className="w-full border-t border-gray-300" />
-                  </div>
-                  <div className="relative flex justify-center text-sm">
-                    <span className="px-2 bg-darkPurple text-gray-200">
-                      Or continue with
-                    </span>
-                  </div>
-                </div>
+    <section className="relative py-20 2xl:py-40 bg-gray-800 overflow-hidden">
+      <div className="relative container px-4 mx-auto">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex flex-wrap items-center -mx-4">
+            <div className="w-full lg:w-1/2 px-4 mb-16 lg:mb-0">
+              <div className="max-w-md">
+                <span className="text-lg text-blue-400 font-bold">
+                  Register Account
+                </span>
+                <h2 className="mt-8 mb-12 text-5xl font-bold font-heading text-white">
+                  Create an account and start pending down your ideas
+                </h2>
               </div>
+            </div>
+            <div className="w-full lg:w-1/2 px-4">
+              <div className="px-6 lg:px-20 py-12 lg:py-24 bg-gray-600 rounded-lg">
+                <form onSubmit={formik.handleSubmit}>
+                  <h3 className="mb-10 text-2xl text-white font-bold font-heading">
+                    Register Account
+                    {/* display error message*/}
+                    {appErr || serverErr ? (
+                      <div className="text-red-400">
+                        {serverErr} {appErr}
+                      </div>
+                    ) : null}
+                  </h3>
 
-              {/*FORM FIELDS*/}
-              <div className="mt-6">
-                <form onSubmit={formik.handleSubmit} className="space-y-6">
-                  <div>
-                    <label
-                      htmlFor="firstName"
-                      className="block text-sm font-medium text-gray-200"
-                    >
-                      First Name
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        value={formik.values.firstName}
-                        onChange={formik.handleChange("firstName")}
-                        onBlur={formik.handleBlur("firstName")}
-                        id="firstName"
-                        name="firstName"
-                        type="text"
-                        autoComplete="firstName"
-                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
+                  {/* First name */}
+                  <div className="flex items-center pl-6 mb-3 bg-white rounded-full">
+                    <span className="inline-block pr-3 py-2 border-r border-gray-50">
+                      <svg
+                        className="w-5 h-5"
+                        width="20"
+                        height="21"
+                        viewBox="0 0 20 21"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M7.29593 0.492188C4.81333 0.492188 2.80078 2.50474 2.80078 4.98734C2.80078 7.46993 4.81333 9.48248 7.29593 9.48248C9.77851 9.48248 11.7911 7.46993 11.7911 4.98734C11.7911 2.50474 9.77851 0.492188 7.29593 0.492188ZM3.69981 4.98734C3.69981 3.00125 5.30985 1.39122 7.29593 1.39122C9.28198 1.39122 10.892 3.00125 10.892 4.98734C10.892 6.97342 9.28198 8.58346 7.29593 8.58346C5.30985 8.58346 3.69981 6.97342 3.69981 4.98734Z"
+                          fill="black"
+                        ></path>
+                        <path
+                          d="M5.3126 10.3816C2.38448 10.3816 0.103516 13.0524 0.103516 16.2253V19.8214C0.103516 20.0696 0.304772 20.2709 0.55303 20.2709H14.0385C14.2867 20.2709 14.488 20.0696 14.488 19.8214C14.488 19.5732 14.2867 19.3719 14.0385 19.3719H1.00255V16.2253C1.00255 13.4399 2.98344 11.2806 5.3126 11.2806H9.27892C10.5443 11.2806 11.6956 11.9083 12.4939 12.9335C12.6465 13.1293 12.9289 13.1644 13.1248 13.0119C13.3207 12.8594 13.3558 12.5769 13.2033 12.381C12.2573 11.1664 10.8566 10.3816 9.27892 10.3816H5.3126Z"
+                          fill="black"
+                        ></path>
+                        <rect
+                          x="15"
+                          y="15"
+                          width="5"
+                          height="1"
+                          rx="0.5"
+                          fill="black"
+                        ></rect>
+                        <rect
+                          x="17"
+                          y="18"
+                          width="5"
+                          height="1"
+                          rx="0.5"
+                          transform="rotate(-90 17 18)"
+                          fill="black"
+                        ></rect>
+                      </svg>
+                    </span>
+                    <input
+                      value={formik.values.firstName}
+                      onChange={formik.handleChange("firstName")}
+                      onBlur={formik.handleBlur("firstName")}
+                      className="w-full pl-4 pr-6 py-4 font-bold placeholder-gray-300 rounded-r-full focus:outline-none"
+                      type="firstName"
+                      placeholder="First Name"
+                    />
                   </div>
-
-                  {/*ALERT ERROR VALIDATION */}
-                  <div className="text-sm text-red-400 mb-2">
+                  {/* Err msg*/}
+                  <div className="text-red-400 mb-2">
                     {formik.touched.firstName && formik.errors.firstName}
                   </div>
-
-                  <div>
-                    <label
-                      htmlFor="lastName"
-                      className="block text-sm font-medium text-gray-200"
-                    >
-                      Last Name
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        value={formik.values.lastName}
-                        onChange={formik.handleChange("lastName")}
-                        onBlur={formik.handleBlur("lastName")}
-                        id="lastName"
-                        name="lastName"
-                        type="text"
-                        autoComplete="lastName"
-                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
+                  {/* Last name */}
+                  <div className="flex items-center pl-6 mb-3 bg-white rounded-full">
+                    <span className="inline-block pr-3 py-2 border-r border-gray-50">
+                      <svg
+                        className="w-5 h-5"
+                        width="20"
+                        height="21"
+                        viewBox="0 0 20 21"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M7.29593 0.492188C4.81333 0.492188 2.80078 2.50474 2.80078 4.98734C2.80078 7.46993 4.81333 9.48248 7.29593 9.48248C9.77851 9.48248 11.7911 7.46993 11.7911 4.98734C11.7911 2.50474 9.77851 0.492188 7.29593 0.492188ZM3.69981 4.98734C3.69981 3.00125 5.30985 1.39122 7.29593 1.39122C9.28198 1.39122 10.892 3.00125 10.892 4.98734C10.892 6.97342 9.28198 8.58346 7.29593 8.58346C5.30985 8.58346 3.69981 6.97342 3.69981 4.98734Z"
+                          fill="black"
+                        ></path>
+                        <path
+                          d="M5.3126 10.3816C2.38448 10.3816 0.103516 13.0524 0.103516 16.2253V19.8214C0.103516 20.0696 0.304772 20.2709 0.55303 20.2709H14.0385C14.2867 20.2709 14.488 20.0696 14.488 19.8214C14.488 19.5732 14.2867 19.3719 14.0385 19.3719H1.00255V16.2253C1.00255 13.4399 2.98344 11.2806 5.3126 11.2806H9.27892C10.5443 11.2806 11.6956 11.9083 12.4939 12.9335C12.6465 13.1293 12.9289 13.1644 13.1248 13.0119C13.3207 12.8594 13.3558 12.5769 13.2033 12.381C12.2573 11.1664 10.8566 10.3816 9.27892 10.3816H5.3126Z"
+                          fill="black"
+                        ></path>
+                        <rect
+                          x="15"
+                          y="15"
+                          width="5"
+                          height="1"
+                          rx="0.5"
+                          fill="black"
+                        ></rect>
+                        <rect
+                          x="17"
+                          y="18"
+                          width="5"
+                          height="1"
+                          rx="0.5"
+                          transform="rotate(-90 17 18)"
+                          fill="black"
+                        ></rect>
+                      </svg>
+                    </span>
+                    <input
+                      value={formik.values.lastName}
+                      onChange={formik.handleChange("lastName")}
+                      onBlur={formik.handleBlur("lastName")}
+                      className="w-full pl-4 pr-6 py-4 font-bold placeholder-gray-300 rounded-r-full focus:outline-none"
+                      type="lastName"
+                      placeholder="Last Name"
+                    />
                   </div>
-
-                  {/*ALERT ERROR VALIDATION */}
-                  <div className="text-sm text-red-400 mb-2">
+                  {/* Err msg*/}
+                  <div className="text-red-400 mb-2">
                     {formik.touched.lastName && formik.errors.lastName}
                   </div>
-
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-sm font-medium text-gray-200"
-                    >
-                      Email address
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        value={formik.values.email}
-                        onChange={formik.handleChange("email")}
-                        onBlur={formik.handleBlur("email")}
-                        id="email"
-                        name="email"
-                        type="email"
-                        autoComplete="email"
-                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
+                  {/* Email */}
+                  <div className="flex items-center pl-6 mb-3 bg-white rounded-full">
+                    <span className="inline-block pr-3 py-2 border-r border-gray-50">
+                      <svg
+                        className="w-5 h-5"
+                        width="20"
+                        height="21"
+                        viewBox="0 0 20 21"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M7.29593 0.492188C4.81333 0.492188 2.80078 2.50474 2.80078 4.98734C2.80078 7.46993 4.81333 9.48248 7.29593 9.48248C9.77851 9.48248 11.7911 7.46993 11.7911 4.98734C11.7911 2.50474 9.77851 0.492188 7.29593 0.492188ZM3.69981 4.98734C3.69981 3.00125 5.30985 1.39122 7.29593 1.39122C9.28198 1.39122 10.892 3.00125 10.892 4.98734C10.892 6.97342 9.28198 8.58346 7.29593 8.58346C5.30985 8.58346 3.69981 6.97342 3.69981 4.98734Z"
+                          fill="black"
+                        ></path>
+                        <path
+                          d="M5.3126 10.3816C2.38448 10.3816 0.103516 13.0524 0.103516 16.2253V19.8214C0.103516 20.0696 0.304772 20.2709 0.55303 20.2709H14.0385C14.2867 20.2709 14.488 20.0696 14.488 19.8214C14.488 19.5732 14.2867 19.3719 14.0385 19.3719H1.00255V16.2253C1.00255 13.4399 2.98344 11.2806 5.3126 11.2806H9.27892C10.5443 11.2806 11.6956 11.9083 12.4939 12.9335C12.6465 13.1293 12.9289 13.1644 13.1248 13.0119C13.3207 12.8594 13.3558 12.5769 13.2033 12.381C12.2573 11.1664 10.8566 10.3816 9.27892 10.3816H5.3126Z"
+                          fill="black"
+                        ></path>
+                        <rect
+                          x="15"
+                          y="15"
+                          width="5"
+                          height="1"
+                          rx="0.5"
+                          fill="black"
+                        ></rect>
+                        <rect
+                          x="17"
+                          y="18"
+                          width="5"
+                          height="1"
+                          rx="0.5"
+                          transform="rotate(-90 17 18)"
+                          fill="black"
+                        ></rect>
+                      </svg>
+                    </span>
+                    <input
+                      value={formik.values.email}
+                      onChange={formik.handleChange("email")}
+                      onBlur={formik.handleBlur("email")}
+                      className="w-full pl-4 pr-6 py-4 font-bold placeholder-gray-300 rounded-r-full focus:outline-none"
+                      type="email"
+                      placeholder="example@gmail.com"
+                    />
                   </div>
-
-                  {/*ALERT ERROR VALIDATION */}
-                  <div className="text-sm text-red-400 mb-2">
+                  {/* Err msg*/}
+                  <div className="text-red-400 mb-2">
                     {formik.touched.email && formik.errors.email}
                   </div>
-
-                  <div className="space-y-1">
-                    <label
-                      htmlFor="password"
-                      className="block text-sm font-medium text-gray-200"
-                    >
-                      Password
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        value={formik.values.password}
-                        onChange={formik.handleChange("password")}
-                        onBlur={formik.handleBlur("password")}
-                        id="password"
-                        name="password"
-                        type="password"
-                        autoComplete="current-password"
-                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
+                  <div className="flex items-center pl-6 mb-3 bg-white rounded-full">
+                    <span className="inline-block pr-3 py-2 border-r border-gray-50">
+                      <svg
+                        className="w-5 h-5"
+                        width="17"
+                        height="21"
+                        viewBox="0 0 17 21"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M15.184 8.48899H15.2011V6.25596C15.2011 2.6897 12.3193 0 8.49924 0C4.67919 0 1.7974 2.6897 1.7974 6.25596V8.48899H1.81568C0.958023 9.76774 0.457031 11.3049 0.457031 12.9569C0.457031 17.3921 4.06482 21 8.49924 21C12.9341 21 16.5424 17.3922 16.5428 12.9569C16.5428 11.3049 16.0417 9.76774 15.184 8.48899ZM2.69098 6.25596C2.69098 3.14895 5.13312 0.893578 8.49924 0.893578C11.8654 0.893578 14.3075 3.14895 14.3075 6.25596V7.39905C12.8423 5.86897 10.7804 4.91468 8.49966 4.91468C6.21837 4.91468 4.15607 5.86946 2.69098 7.40017V6.25596ZM8.49966 20.1064C4.55762 20.1064 1.35061 16.8989 1.35061 12.9569C1.35061 9.01534 4.5572 5.80826 8.49924 5.80826C12.4422 5.80826 15.6488 9.01534 15.6492 12.9569C15.6492 16.8989 12.4426 20.1064 8.49966 20.1064Z"
+                          fill="black"
+                        ></path>
+                        <path
+                          d="M8.49957 8.93567C7.26775 8.93567 6.26562 9.93779 6.26562 11.1696C6.26562 11.8679 6.60247 12.5283 7.1592 12.9474V14.7439C7.1592 15.4829 7.76062 16.0843 8.49957 16.0843C9.2381 16.0843 9.83994 15.4829 9.83994 14.7439V12.9474C10.3966 12.5278 10.7335 11.8679 10.7335 11.1696C10.7335 9.93779 9.7309 8.93567 8.49957 8.93567ZM9.16793 12.3228C9.03032 12.4023 8.94636 12.5502 8.94636 12.7088V14.7439C8.94636 14.9906 8.74572 15.1907 8.49957 15.1907C8.25342 15.1907 8.05278 14.9906 8.05278 14.7439V12.7088C8.05278 12.5502 7.96833 12.4032 7.83072 12.3228C7.41026 12.078 7.1592 11.6468 7.1592 11.1696C7.1592 10.4307 7.76062 9.82925 8.49957 9.82925C9.2381 9.82925 9.83994 10.4307 9.83994 11.1696C9.83994 11.6468 9.58881 12.078 9.16793 12.3228Z"
+                          fill="black"
+                        ></path>
+                      </svg>
+                    </span>
+                    <input
+                      value={formik.values.password}
+                      onChange={formik.handleChange("password")}
+                      onBlur={formik.handleBlur("password")}
+                      className="w-full pl-4 pr-6 py-4 font-bold placeholder-gray-300 rounded-r-full focus:outline-none"
+                      type="password"
+                      placeholder="Password"
+                    />
                   </div>
-
-                  {/*ALERT ERROR VALIDATION */}
-                  <div className="text-sm text-red-400 mb-2">
+                  {/* Err msg*/}
+                  <div className="text-red-400 mb-2">
                     {formik.touched.password && formik.errors.password}
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <input
-                        id="remember-me"
-                        name="remember-me"
-                        type="checkbox"
-                        className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                      />
-                      <label
-                        htmlFor="remember-me"
-                        className="ml-2 block text-sm text-gray-200"
-                      >
-                        Remember me
-                      </label>
-                    </div>
+                  <div className="inline-flex mb-10"></div>
 
-                    <div className="text-sm">
-                      <a
-                        href="#"
-                        className="font-medium text-indigo-500 hover:text-indigo-300"
-                      >
-                        Forgot your password?
-                      </a>
-                    </div>
-                  </div>
-
-                  {/*DISPLAY ERROR IF USER EXISTS OR SERVER ERROR*/}
-                  {appError || serverError ? (
-                    <div
-                      className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
-                      role="alert"
+                  {/* Check for loading */}
+                  {loading ? (
+                    <button
+                      disabled
+                      className="py-4 w-full bg-gray-500  text-white font-bold rounded-full transition duration-200"
                     >
-                      <span className="font-medium">Error! </span>
-                      {serverError} {appError}
-                    </div>
-                  ) : null}
-
-                  <div>
-                    {/* CHECK FOR LOADING STATE*/}
-                    {loading ? (
-                      <button
-                        disabled
-                        type="submit"
-                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm
-                      text-sm font-medium text-white bg-purple-600 hover:bg-rose-300 focus:outline-none focus:ring-2
-                      focus:ring-offset-2 focus:ring-indigo-500"
-                      >
-                        Loading...
-                      </button>
-                    ) : (
-                      <button
-                        type="submit"
-                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm
-                      text-sm font-medium text-white bg-purple-600 hover:bg-rose-300 focus:outline-none focus:ring-2
-                      focus:ring-offset-2 focus:ring-indigo-500"
-                      >
-                        Sign In
-                      </button>
-                    )}
-                  </div>
+                      loading please wait...
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="py-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-full transition duration-200"
+                    >
+                      Register
+                    </button>
+                  )}
                 </form>
               </div>
             </div>
           </div>
         </div>
-        <div className="bg-gradient-to-tl from-darkPurple via-darkPurple to-darkPink hidden lg:block relative w-0 flex-1">
-          <img
-            className="absolute inset-0 h-full w-full object-none object-center"
-            src={backgrounAuth}
-            alt=""
-          />
-        </div>
       </div>
-    </>
+    </section>
   );
 };
 

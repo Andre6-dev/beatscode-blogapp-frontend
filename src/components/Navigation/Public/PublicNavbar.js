@@ -1,8 +1,12 @@
 import { Disclosure } from "@headlessui/react";
 import { Link } from "react-router-dom";
-import { MenuIcon, XIcon, LoginIcon } from "@heroicons/react/outline";
+import {
+  MenuIcon,
+  XIcon,
+  LoginIcon,
+  BookOpenIcon,
+} from "@heroicons/react/outline";
 import { PlusIcon } from "@heroicons/react/solid";
-import mainLogo from "../../../img/Logo1.png";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
@@ -18,11 +22,11 @@ function classNames(...classes) {
 
 const PublicNavbar = () => {
   return (
-    <Disclosure as="nav" className="bg-blueLogin">
+    <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between h-14">
+            <div className="flex justify-between h-16">
               <div className="flex">
                 <div className="-ml-2 mr-2 flex items-center md:hidden">
                   {/* Mobile menu button */}
@@ -37,14 +41,10 @@ const PublicNavbar = () => {
                 </div>
                 <div className="flex-shrink-0 flex items-center">
                   {/* Logo */}
-                  <img
-                    className="hidden lg:block h-8 w-auto"
-                    src={mainLogo}
-                    alt="Workflow"
-                  />
+                  <BookOpenIcon className="h-10 w-10 text-yellow-200" />
                 </div>
                 <div className="hidden md:ml-6 md:flex md:items-center md:space-x-4">
-                  {navigation.map((item) => (
+                  {navigation.map(item => (
                     <Link
                       key={item.name}
                       to={item.href}
@@ -93,7 +93,7 @@ const PublicNavbar = () => {
 
           <Disclosure.Panel className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {navigation.map((item) => (
+              {navigation.map(item => (
                 <a
                   key={item.name}
                   href={item.href}

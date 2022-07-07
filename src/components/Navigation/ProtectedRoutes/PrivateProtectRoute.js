@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 
 const PrivateProtectRoute = ({ component: Component, ...rest }) => {
-  // Check if user is logged
-  const user = useSelector((state) => state?.users);
+  //check if user is loggin
+  const user = useSelector(state => state?.users);
   const { userAuth } = user;
   return (
     <Route

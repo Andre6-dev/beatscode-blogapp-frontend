@@ -7,14 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { createpostAction } from "../../redux/slices/posts/postSlices";
 import CategoryDropDown from "../Categories/CategoryDropDown";
 
-// FORM SCHEMA
+//Form schema
 const formSchema = Yup.object({
   title: Yup.string().required("Title is required"),
   description: Yup.string().required("Description is required"),
   category: Yup.object().required("Category is required"),
   image: Yup.string().required("Image is required"),
 });
-// CSS FOR DROPZONE
+//css for dropzone
 const Container = styled.div`
   flex: 1;
   display: flex;
@@ -26,6 +26,7 @@ const Container = styled.div`
   border-style: dashed;
   background-color: #fafafa;
   color: #bdbdbd;
+border-color:'red'
   transition: border 0.24s ease-in-out;
 `;
 
@@ -33,9 +34,9 @@ export default function CreatePost() {
   const dispatch = useDispatch();
 
   //select store data
-  const post = useSelector((state) => state?.post);
+  const post = useSelector(state => state?.post);
   const { isCreated, loading, appErr, serverErr } = post;
-  //Formik
+  //formik
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -43,9 +44,9 @@ export default function CreatePost() {
       category: "",
       image: "",
     },
-    onSubmit: (values) => {
-      //Dispatch the action
-      console.log(values);
+    onSubmit: values => {
+      //dispath the action
+
       const data = {
         category: values?.category?.label,
         title: values?.title,
@@ -61,7 +62,7 @@ export default function CreatePost() {
   if (isCreated) return <Redirect to="/posts" />;
   return (
     <>
-      <div className="min-h-screen bg-blueLogin flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-300">
             Create Post
@@ -150,7 +151,7 @@ export default function CreatePost() {
                   <Dropzone
                     onBlur={formik.handleBlur("image")}
                     accept="image/jpeg, image/png"
-                    onDrop={(acceptedFiles) => {
+                    onDrop={acceptedFiles => {
                       formik.setFieldValue("image", acceptedFiles[0]);
                     }}
                   >
@@ -159,7 +160,7 @@ export default function CreatePost() {
                         <div
                           {...getRootProps({
                             className: "dropzone",
-                            onDrop: (event) => event.stopPropagation(),
+                            onDrop: event => event.stopPropagation(),
                           })}
                         >
                           <input {...getInputProps()} />

@@ -11,13 +11,12 @@ import {
 import { PlusIcon, LogoutIcon } from "@heroicons/react/solid";
 import { useDispatch } from "react-redux";
 import { logoutAction } from "../../../redux/slices/users/usersSlices";
-import mainLogo from "../../../img/Logo1.png";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
   { name: "Create", href: "/create-post", current: false },
   { name: "Posts", href: "/posts", current: false },
-  { name: "Authors", href: "/users", current: false },
+  { name: "Profile", href: "/users", current: false },
 ];
 
 function classNames(...classes) {
@@ -26,19 +25,18 @@ function classNames(...classes) {
 
 const PrivateNavbar = ({ isLogin }) => {
   const userNavigation = [
-    { name: "Your Profile", href: `/profile` },
+    { name: "Your Profile", href: `/profile/${isLogin?._id}` },
     { name: "Change your password", href: "/update-password" },
   ];
 
-  // LOGOUT
+  //logout
   const dispatch = useDispatch();
-
   return (
-    <Disclosure as="nav" className="bg-blueLogin">
+    <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between h-14">
+            <div className="flex justify-between h-16">
               <div className="flex">
                 <div className="-ml-2 mr-2 flex items-center md:hidden">
                   {/* Mobile menu button */}
@@ -53,14 +51,10 @@ const PrivateNavbar = ({ isLogin }) => {
                 </div>
                 <div className="flex-shrink-0 flex items-center">
                   {/* Logo */}
-                  <img
-                    className="hidden lg:block h-8 w-auto"
-                    src={mainLogo}
-                    alt="Workflow"
-                  />
+                  <BookOpenIcon className="h-10 w-10 text-yellow-200" />
                 </div>
                 <div className="hidden md:ml-6 md:flex md:items-center md:space-x-4">
-                  {navigation.map((item) => (
+                  {navigation.map(item => (
                     <Link
                       key={item.name}
                       to={item.href}
@@ -112,7 +106,7 @@ const PrivateNavbar = ({ isLogin }) => {
                             <span className="sr-only">Open user menu</span>
                             <img
                               className="h-8 w-8 rounded-full"
-                              // src={isLogin?.profilePhoto}
+                              src={isLogin?.profilePhoto}
                               alt=""
                             />
                           </Menu.Button>
@@ -131,7 +125,7 @@ const PrivateNavbar = ({ isLogin }) => {
                             static
                             className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                           >
-                            {userNavigation.map((item) => (
+                            {userNavigation.map(item => (
                               <Menu.Item key={item.name}>
                                 {({ active }) => (
                                   <a
@@ -158,7 +152,7 @@ const PrivateNavbar = ({ isLogin }) => {
 
           <Disclosure.Panel className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {navigation.map((item) => (
+              {navigation.map(item => (
                 <a
                   key={item.name}
                   href={item.href}
@@ -180,25 +174,21 @@ const PrivateNavbar = ({ isLogin }) => {
                 <div className="flex-shrink-0">
                   <img
                     className="h-10 w-10 rounded-full"
-                    // src={isLogin.profilePhoto}
+                    src={isLogin?.profilePhoto}
                     alt=""
                   />
                 </div>
                 <div className="ml-3">
                   <div className="text-base font-medium text-white">
-                    {/* {user.name} */}
+                    {isLogin?.firstName} {isLogin?.lastName}
                   </div>
                   <div className="text-sm font-medium text-gray-400">
-                    {/* {user.email} */}
+                    {isLogin?.email}
                   </div>
                 </div>
-                <button className="ml-auto flex-shrink-0 bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
               </div>
               <div className="mt-3 px-2 space-y-1 sm:px-3">
-                {userNavigation.map((item) => (
+                {userNavigation.map(item => (
                   <a
                     key={item.name}
                     href={item.href}
